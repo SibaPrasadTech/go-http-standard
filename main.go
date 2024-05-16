@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello World!")
 	router := http.NewServeMux()
 	middlewareRouter := middleware.Logging(router)
 	router.HandleFunc("/ping",func (rs http.ResponseWriter, req *http.Request){
