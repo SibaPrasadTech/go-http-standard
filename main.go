@@ -12,7 +12,7 @@ func main() {
 	router.HandleFunc("/ping",func (rs http.ResponseWriter, req *http.Request){
 		rs.Write([]byte("PING PONG"))
 	})
-	router.HandleFunc("/intpath/{int}",func (rs http.ResponseWriter, req *http.Request){
+	router.HandleFunc("GET /intpath/{int}",func (rs http.ResponseWriter, req *http.Request){
 		pathValue := req.PathValue("int")
 		intPath, err := strconv.Atoi(pathValue);
 		if (err != nil){
@@ -27,6 +27,11 @@ func main() {
 		pathValue := req.PathValue("str")
 		rs.WriteHeader(http.StatusOK)
 		rs.Write([]byte(fmt.Sprintf("The Path Value for strpath is : %v",pathValue)))
+	})
+	router.HandleFunc("POST /strpath/{str}",func (rs http.ResponseWriter, req *http.Request){
+		pathValue := req.PathValue("str")
+		rs.WriteHeader(http.StatusOK)
+		rs.Write([]byte(fmt.Sprintf("{POST strpath : %v",pathValue)))
 	})
 	server := http.Server{
 		Addr: ":8000",
