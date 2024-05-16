@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+
+	"github.com/SibaPrasadTech/go-http-standard/middleware"
 )
 
 func main() {
 	fmt.Println("Hello World!")
 	router := http.NewServeMux()
+	middlewareRouter := middleware.Logging(router)
 	router.HandleFunc("/ping",func (rs http.ResponseWriter, req *http.Request){
 		rs.Write([]byte("PING PONG"))
 	})
@@ -35,7 +38,7 @@ func main() {
 	})
 	server := http.Server{
 		Addr: ":8000",
-		Handler: router,
+		Handler: middlewareRouter,
 	}
 	fmt.Println("Server listening on Port :8000")
 	server.ListenAndServe()
